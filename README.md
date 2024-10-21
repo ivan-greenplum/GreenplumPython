@@ -50,3 +50,17 @@ db = gp.database("postgresql://ivan:ivan@localhost/ivan")
 products = db.create_dataframe(table_name="products")
 print(products)
 ```
+
+```python
+import greenplumpython as gp
+db = gp.database("postgresql://ivan:ivan@localhost/ivan")
+
+products = db.create_dataframe(table_name="products")
+categories = db.create_dataframe(table_name="categories")
+
+combined = products.join(categories, on=["category_id"])
+
+# pull the columns we want to maintain in the join
+final_df = combined[["product_name", "price", "category_name"]]
+print (final_df)
+```
