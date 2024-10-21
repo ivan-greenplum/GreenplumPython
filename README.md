@@ -23,10 +23,22 @@ pip3 install --user greenplum-python
 Since a user location doesn't make sense for a virtual environment, to install the **GreenplumPython** library,
 just remove `--user` from the above commands.
 
-## Documentation
+## Hello World
+```python
+import greenplumpython as gp
+db = gp.database("postgresql://ivan:ivan@localhost/ivan")
 
-The documentation of GreenplumPython can be viewed at:
+cols1 = ["category_name", "category_id"]
+rows1 = [ ('Smart Phone', 1), ('Laptop', 2), ('DataFramet', 3) ]
 
-[Latest development version](https://greenplum-db.github.io/GreenplumPython/latest/)
+cols2 = ["product_name", "category_id","price"]
+rows2 = [ ('iPhone', 1, 1019), ('Samsung Galaxy', 1, 959), ('HP Elite',2,1503),
+        ('Lenovo Thinkpad',2,1429), ('iPad',3,589), ('Kindle Fire',3,150) ]
 
-[Latest released version](https://greenplum-db.github.io/GreenplumPython/stable/)
+# Create a DataFrame in GreenplumPython
+categories = gp.DataFrame.from_rows(rows=rows1, column_names=cols1, db=db)
+categories.save_as("categories", cols1, temp=False)
+
+products = gp.DataFrame.from_rows(rows=rows2, column_names=cols2, db=db)
+products.save_as("products", column_names=cols2, temp=False)
+```
