@@ -64,3 +64,17 @@ combined = products.join(categories, on=["category_id"])
 final_df = combined[["product_name", "price", "category_name"]]
 print (final_df)
 ```
+
+```python
+import greenplumpython as gp
+
+@gp.create_function
+def increment_price(price: float, percent_inc: float) -> float:
+    return ((price * percent_inc / 100.0) + price)
+
+db = gp.database("postgresql://ivan:ivan@localhost/ivan")
+products = db.create_dataframe(table_name="products")
+
+updated = products.assign(new_price=lambda row: increment_price(row["price"], 20))
+print (updated)
+```
