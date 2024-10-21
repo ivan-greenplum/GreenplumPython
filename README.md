@@ -23,7 +23,7 @@ pip3 install --user greenplum-python
 Since a user location doesn't make sense for a virtual environment, to install the **GreenplumPython** library,
 just remove `--user` from the above commands.
 
-## Hello World
+## Simple Demo Code
 ```python
 import greenplumpython as gp
 db = gp.database("postgresql://ivan:ivan@localhost/ivan")
@@ -41,4 +41,12 @@ categories.save_as("categories", cols1, temp=False)
 
 products = gp.DataFrame.from_rows(rows=rows2, column_names=cols2, db=db)
 products.save_as("products", column_names=cols2, temp=False)
+```
+
+```python
+import greenplumpython as gp
+db = gp.database("postgresql://ivan:ivan@localhost/ivan")
+
+products = db.create_dataframe(table_name="products")
+print(products)
 ```
